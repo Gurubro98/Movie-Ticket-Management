@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "l9MfV2KdL/mPvbrQkHY8wp6EjUr3PRvzy+EFLwgst+A=",
+  "Source": "Movie Ticket Web API",
+  "BasePath": "_content/Movie Ticket Web API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

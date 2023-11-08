@@ -1,0 +1,39 @@
+﻿@model Login
+
+@{
+    ViewBag.Title = "Login Page";
+}
+@if (TempData["Register"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Register"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["Logout"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Logout"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<form asp-action="Login" asp-controller="Account">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Password" class="form-label">Password</label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="RememberMe" class="form-label">Remember Me</label>
+        <input type="checkbox" class="form-check-input" />
+        <span asp-validation-for="RememberMe" class="text-danger"></span>
+    </div>
+    <input type="submit" value="Sign In" class="btn btn-primary" />
+</form>

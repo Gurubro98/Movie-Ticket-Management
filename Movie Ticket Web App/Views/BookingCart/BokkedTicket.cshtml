@@ -1,0 +1,66 @@
+﻿@model IEnumerable<BookingCart>
+
+@{
+    ViewData["Title"] = "Booked Ticket";
+}
+
+
+
+
+
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MovieId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie.Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie.Cast)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MovieId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Movie.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Movie.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Movie.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Movie.Cast)
+                </td>
+                <td>
+                    <b>Booked</b>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+

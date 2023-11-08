@@ -1,0 +1,159 @@
+﻿@model IEnumerable<Movie>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+@if (TempData["Login"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Login"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="container mt-5">
+     <form asp-action="Index">
+         <div class="row">
+             <div class="col-md-6">
+                 <input class="form-control" style="max-width:100%" type="search" name="searchTxt" value="@ViewBag.Search" />
+             </div>
+             <div class="col-md-4">
+                 <input type="submit" value="Search" class="btn btn-primary" />
+             </div>
+
+         </div>
+
+     </form>
+
+ </div>
+
+ 
+
+@if (TempData["Empty"] != null)
+{
+    <h4>@TempData["Empty"]</h4>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MovieId)
+            </th>
+            <th>
+                <a class="text-black text-decoration-none" asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Name)</a>
+            </th>
+            <th>
+                <a class="text-black text-decoration-none" asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Date)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cast)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+
+        @{
+            List<int> data = ViewBag.Booked;
+        }
+        @foreach (var item in Model)
+        {
+             
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MovieId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cast)
+                </td>
+                <td>
+                    @if (data.Contains( item.MovieId))
+                    {
+                        <form asp-action="TicketBooking" asp-route-Id = "@item.MovieId" method="post">
+                            <input class="btn btn-danger" value="Booked" type="submit" />
+                      
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-action="TicketBooking" asp-route-Id="@item.MovieId" method="post">
+                            <input class="btn btn-success" value="Booking" type="submit" />
+
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+
+@{
+    var PrevDisabled = (ViewBag.PageNumber - 1) < 1 ? "disabled" : "";
+    var NextDisabled = (ViewBag.PageNumber + 1) > ViewBag.TotalPage ? "disabled" : "";
+}
+<form asp-action="Index">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination mt-5">
+            <li class="page-item">
+                <a class="page-link btn @PrevDisabled" asp-action="Index" asp-route-pageNumber="@(ViewBag.PageNumber - 1)" asp-controller="User" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= ViewBag.TotalPage; i++)
+            {
+                <li class="page-item"><a class="page-link" asp-action="Index" asp-route-pageNumber="@i" asp-route-searchTxt="@ViewBag.Search" asp-controller="User">@i</a></li>
+            }
+            <li class="page-item">
+
+                <a class="page-link btn @NextDisabled" asp-action="Index" asp-route-pageNumber="@(ViewBag.PageNumber + 1)" asp-controller="User" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</form>
+
+
+<script>
+    $(document).ready(function () {
+
+        $("#book").click(function () {
+            $("#book").html("Booked");
+        });
+
+    });
+</script>
